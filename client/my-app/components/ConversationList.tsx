@@ -12,7 +12,7 @@ const ConversationList: React.FC = () => {
   const [, setCurrentConversation] = useAtom(currentConversationAtom);
 
   return (
-    <div className="h-full overflow-y-scroll bg-secondary-lighter">
+    <div className="h-full overflow-y-scroll bg-zinc-900">
       {conversations.map((conversation, index) => (
         <div
           key={index}
