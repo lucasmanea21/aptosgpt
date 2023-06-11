@@ -1,6 +1,6 @@
 # Introducing AptosGPT 🤖
 
-![AptosGPT]("https://raw.githubusercontent.com/lucasmanea21/aptosgpt/main/client/my-app/public/images/AptosGPT.jpg?raw=true")
+![AptosGPT]("AptosGPT.jpg")
 
 AptosGPT is the general purpose AI model built for everything Aptos.
 
