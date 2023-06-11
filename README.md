@@ -1,6 +1,6 @@
 # Introducing AptosGPT 🤖
 
-![AptosGPT]("AptosGPT.jpg")
+![AptosGPT](./AptosGPT.jpg)
 
 AptosGPT is the general purpose AI model built for everything Aptos.
 
