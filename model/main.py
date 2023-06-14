@@ -14,6 +14,8 @@ index = None
 persist_dir = './storage'
 
 def initialize_index():
+    print("does path exist?", os.path.exists(persist_dir))
+    
     global index
     storage_context = StorageContext.from_defaults(persist_dir=persist_dir)
     if os.path.exists(persist_dir):
