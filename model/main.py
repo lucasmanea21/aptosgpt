@@ -15,7 +15,7 @@ persist_dir = './storage'
 
 def initialize_index():
     print("does path exist?", os.path.exists(persist_dir))
-    
+
     global index
     storage_context = StorageContext.from_defaults(persist_dir=persist_dir)
     if os.path.exists(persist_dir):
@@ -38,6 +38,6 @@ def query_index():
   response = query_engine.query(query_text)
   return str(response), 200
 
-if __name__ == "__main__":
+if __name__ == "main":
     initialize_index()
     app.run(debug=True)
