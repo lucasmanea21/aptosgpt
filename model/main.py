@@ -25,6 +25,7 @@ def initialize_index():
         index = VectorStoreIndex.from_documents(documents, storage_context=storage_context)
         storage_context.persist(persist_dir=persist_dir)
 
+initialize_index()
 
 app = Flask(__name__)
 
@@ -38,7 +39,4 @@ def query_index():
   response = query_engine.query(query_text)
   return str(response), 200
 
-if __name__ == "main":
-    initialize_index()
-    port = int(os.environ.get('PORT', 5000))
-    app.run(debug=True, host='0.0.0.0', port=port)
+
