@@ -59,7 +59,7 @@ export default function Home() {
 
   useEffect(() => {
     webSocket.current = new WebSocket(
-      `ws://${process.env.NEXT_PUBLIC_LCC_ENDPOINT_URL}/chat`
+      `wss://${process.env.NEXT_PUBLIC_LCC_ENDPOINT_URL}/chat`
     );
 
     webSocket.current.onopen = () => {
