@@ -2,7 +2,6 @@
 
 ./client/my-app/node_modules
 ./model/.env
-./model/data
 
 # dependencies
 /node_modules
