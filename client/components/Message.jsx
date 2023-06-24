@@ -6,7 +6,6 @@ import { vscDarkPlus } from "react-syntax-highlighter/dist/cjs/styles/prism";
 import styles from "../styles/Home.module.css";
 
 const Message = ({ message, index, loading, messages }) => {
-  console.log("message", message);
   return (
     <div
       key={index}
@@ -22,18 +21,11 @@ const Message = ({ message, index, loading, messages }) => {
       style={{
         display: "flex",
         justifyContent: "center",
+        overflowY: "auto",
         // alignItems: "center",
       }}
     >
-      <div
-        className="messageWrapper"
-        style={{
-          display: "flex",
-          width: "80%",
-          maxWidth: "800px",
-          justifyContent: "flex-start",
-        }}
-      >
+      <div className={styles.messageWrapper}>
         {/* Display the correct icon depending on the message type */}
         {message.type === "apiMessage" ? (
           <Image
@@ -94,7 +86,7 @@ const Message = ({ message, index, loading, messages }) => {
               },
             }}
           >
-            {message.message}
+            {message.message.replace(/(?<!\n)\n(?!\\n)/g, "  \n")}
           </ReactMarkdown>
         </div>
       </div>

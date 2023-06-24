@@ -68,7 +68,6 @@ export default function Home() {
     };
     // Listen for messages
     webSocket.current.onmessage = (event) => {
-      console.log("Message from server ", event.data);
       handleResponse(JSON.parse(event.data));
     };
 
@@ -122,7 +121,6 @@ export default function Home() {
     ]);
 
     if (webSocket.current) {
-      console.log("webSocket", webSocket);
       webSocket.current.send(userInput);
       setUserInput("");
     } else {
@@ -143,7 +141,7 @@ export default function Home() {
   }, [messages]);
 
   return (
-    <Fragment>
+    <div style={{ height: "100vh", overflow: "hidden" }}>
       <Head>
         <title>LangChain Chat</title>
         <meta name="description" content="LangChain documentation chatbot" />
@@ -153,10 +151,9 @@ export default function Home() {
       <Navbar />
       <main className={styles.main}>
         <div className={styles.cloud}>
-          <div className={styles.upperBar}>Model: MultiversX</div>
+          <div className={styles.upperBar}>Model: aptos-extended</div>
           <div ref={messageListRef} className={styles.messagelist}>
             {messages.map((message, index) => {
-              console.log("message", message);
               return (
                 <Message
                   message={message}
@@ -179,6 +176,6 @@ export default function Home() {
           <Footer />
         </div>
       </main>
-    </Fragment>
+    </div>
   );
 }
