@@ -35,7 +35,7 @@ retriever = None
 async def startup_event():
     # Load vectorstore
     global retriever
-    db = DeepLake(dataset_path="hub://lucasmanea/mx-examples-extended2", read_only=True, embedding_function=embeddings)
+    db = DeepLake(dataset_path="hub://lucasmanea/aptos-extended-new", read_only=True, embedding_function=embeddings)
 
     retriever = db.as_retriever()
     retriever.search_kwargs['distance_metric'] = 'cos'
