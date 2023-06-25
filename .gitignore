@@ -3,6 +3,10 @@
 ./client/my-app/node_modules
 ./model/.env
 
+backend-js/node_modules
+backend-js/src/.env
+backend-js/src/training/data
+
 # dependencies
 /node_modules
 /.pnp
