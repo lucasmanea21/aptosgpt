@@ -28,7 +28,10 @@ export const runSupa = async () => {
     }
   );
 
-  const resultOne = await vectorStore.similaritySearch("Hello world", 1);
+  const resultOne = await vectorStore.similaritySearch(
+    "How's it going, people?",
+    1
+  );
 
   console.log(resultOne);
 };

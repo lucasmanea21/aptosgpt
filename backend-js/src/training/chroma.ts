@@ -7,31 +7,38 @@ import {
 } from "langchain/document_loaders/fs/json";
 import { CSVLoader } from "langchain/document_loaders/fs/csv";
 import { TextLoader } from "langchain/document_loaders/fs/text";
+import { CharacterTextSplitter } from "langchain/text_splitter";
 
 export const runChroma = async () => {
   // Create docs with a loader
-  const texts = [
-    `Tortoise: Labyrinth? Labyrinth? Could it Are we in the notorious Little
-    Harmonic Labyrinth of the dreaded Majotaur?`,
-    "Achilles: Yiikes! What is that?",
-    `Tortoise: They say-although I person never believed it myself-that an I
-    Majotaur has created a tiny labyrinth sits in a pit in the middle of
-    it, waiting innocent victims to get lost in its fears complexity.
-    Then, when they wander and dazed into the center, he laughs and
-    laughs at them-so hard, that he laughs them to death!`,
-    "Achilles: Oh, no!",
-    "Tortoise: But it's only a myth. Courage, Achilles.",
-  ];
 
-  const metadatas = [{ id: 2 }, { id: 1 }, { id: 3 }];
-
-  // Create OpenAIEmbeddings instance
-  const embeddings = new OpenAIEmbeddings();
-
-  // Create Chroma vector store
-  const vectorStore = await Chroma.fromTexts(texts, metadatas, embeddings, {
-    collectionName: "godel-escher-bach",
+  const loader = new DirectoryLoader("training/data/docs/concepts", {
+    ".json": (path) => new JSONLoader(path, "/texts"),
+    ".jsonl": (path) => new JSONLinesLoader(path, "/html"),
+    ".txt": (path) => new TextLoader(path),
+    ".csv": (path) => new CSVLoader(path, "text"),
   });
+
+  const splitter = new CharacterTextSplitter({
+    chunkSize: 1000,
+    chunkOverlap: 0,
+  });
+
+  console.log("loader", loader);
+  const docs = await loader.load();
+
+  const texts = await splitter.splitDocuments(docs);
+
+  console.log("docs", docs);
+
+  // Create vector store and index the docs
+  const vectorStore = await Chroma.fromDocuments(
+    texts,
+    new OpenAIEmbeddings(),
+    {
+      collectionName: "a-test-collection",
+    }
+  );
 
   // Search for the most similar document
   const response = await vectorStore.similaritySearch("hello", 1);

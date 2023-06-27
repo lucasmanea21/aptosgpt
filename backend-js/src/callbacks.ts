@@ -5,27 +5,23 @@ import { AgentAction, AgentFinish, ChainValues } from "langchain/schema";
 export class MyCallbackHandler extends BaseCallbackHandler {
   name = "MyCallbackHandler";
 
-  async handleChainStart(chain: Serialized) {
-    console.log(`Entering new ${chain.id} chain...`);
+  handleLLMNewToken(token: string) {
+    console.log("token", { token });
   }
 
-  async handleChainEnd(_output: ChainValues) {
-    console.log("Finished chain.");
+  handleLLMStart(llm: Serialized, _prompts: string[]) {
+    console.log("handleLLMStart", { llm });
   }
 
-  async handleAgentAction(action: AgentAction) {
-    console.log(action.log);
+  handleChainStart(chain: Serialized) {
+    console.log("handleChainStart", { chain });
   }
 
-  async handleToolEnd(output: string) {
-    console.log(output);
+  handleAgentAction(action: AgentAction) {
+    console.log("handleAgentAction", action);
   }
 
-  async handleText(text: string) {
-    console.log(text);
-  }
-
-  async handleAgentEnd(action: AgentFinish) {
-    console.log(action.log);
+  handleToolStart(tool: Serialized) {
+    console.log("handleToolStart", { tool });
   }
 }

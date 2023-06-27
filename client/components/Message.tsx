@@ -5,7 +5,7 @@ import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { vscDarkPlus } from "react-syntax-highlighter/dist/cjs/styles/prism";
 import styles from "../styles/Home.module.css";
 
-const Message = ({ message, index, loading, messages }) => {
+const Message = ({ message, index, loading, messages }: any) => {
   return (
     <div
       key={index}

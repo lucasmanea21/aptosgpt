@@ -2,7 +2,7 @@ import React, { useRef, useEffect } from "react";
 import CircularProgress from "@mui/material/CircularProgress";
 import styles from "../styles/Home.module.css";
 
-const Form = ({ handleSubmit, loading, setUserInput, userInput }) => {
+const Form = ({ handleSubmit, loading, setUserInput, userInput }: any) => {
   const textAreaRef = useRef(null);
 
   // Prevent blank submissions and allow for multiline input

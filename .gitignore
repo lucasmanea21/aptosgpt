@@ -7,6 +7,8 @@ backend-js/node_modules
 backend-js/src/.env
 backend-js/src/training/data
 
+client/.env
+
 # dependencies
 /node_modules
 /.pnp
