@@ -1,6 +1,7 @@
 import React, { useRef, useEffect } from "react";
 import CircularProgress from "@mui/material/CircularProgress";
 import styles from "../styles/Home.module.css";
+import { TextareaAutosize } from "@mui/material";
 
 const Form = ({ handleSubmit, loading, setUserInput, userInput }: any) => {
   const textAreaRef = useRef(null);
@@ -17,14 +18,30 @@ const Form = ({ handleSubmit, loading, setUserInput, userInput }: any) => {
   };
 
   // Focus on text field on load
-  useEffect(() => {
-    textAreaRef.current.focus();
-  }, []);
+  // useEffect(() => {
+  //   textAreaRef.current.focus();
+  // }, []);
 
   return (
     <div className={styles.cloudform}>
       <form onSubmit={handleSubmit}>
-        <textarea
+        <TextareaAutosize
+          onKeyDown={handleEnter}
+          ref={textAreaRef}
+          autoFocus={false}
+          minRows={1}
+          maxRows={6}
+          // type="text"
+          id="userInput"
+          name="userInput"
+          placeholder={
+            loading ? "Waiting for response..." : "Type your question..."
+          }
+          value={userInput}
+          onChange={(e) => setUserInput(e.target.value)}
+          className={styles.textarea}
+        />
+        {/* <textarea
           onKeyDown={handleEnter}
           ref={textAreaRef}
           autoFocus={false}
@@ -38,7 +55,7 @@ const Form = ({ handleSubmit, loading, setUserInput, userInput }: any) => {
           value={userInput}
           onChange={(e) => setUserInput(e.target.value)}
           className={styles.textarea}
-        />
+        /> */}
         <button
           type="submit"
           disabled={loading}

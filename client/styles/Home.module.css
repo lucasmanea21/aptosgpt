@@ -3,7 +3,7 @@
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem;
+
   height: 100%;
   overflow: hidden;
 }
@@ -90,6 +90,7 @@
 
 .cloudform {
   position: relative;
+  width: 100%;
 }
 
 .textarea {
@@ -97,7 +98,7 @@
   resize: none;
   font-size: 1.1rem;
   padding: 1rem 2rem 1rem 2rem;
-  width: 95vw;
+  width: 100%;
   border-radius: 0.5rem;
   border: 1px solid #30373d;
   background: #141619;
@@ -149,11 +150,16 @@
 }
 
 .messagelist {
-  width: 100%;
-  height: 100%;
+  width: 80%;
+  height: 90%;
   overflow-y: auto;
   overflow-anchor: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
   border-radius: 0.5rem;
+  padding-bottom: 200px;
 }
 
 .messagelistloading {
@@ -297,8 +303,8 @@
 }
 
 .cloud {
-  width: 95vw;
-  height: 75%;
+  width: 100%;
+  height: 100%;
   background: #070809;
   border-radius: 0.5rem;
   border: 1px solid #30373d;
@@ -369,7 +375,7 @@
 
   .center {
     width: 100%;
-    height: 10%;
+    height: 0;
   }
 
   .cloudform {
