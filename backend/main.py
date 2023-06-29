@@ -16,8 +16,6 @@ from langchain.embeddings.openai import OpenAIEmbeddings
 from langchain.vectorstores import DeepLake
 from langchain.chains import RetrievalQA
 
-
-
 from callback import QuestionGenCallbackHandler, StreamingLLMCallbackHandler, MyCustomAsyncHandler
 # from query_data import get_chain
 from schemas import ChatResponse
@@ -67,7 +65,7 @@ async def websocket_endpoint(websocket: WebSocket):
     sync_handler = MyCustomSyncHandler(websocket)
     chat_history = []
 
-    model = ChatOpenAI(model_name='gpt-3.5-turbo', streaming=True, callbacks=[sync_handler]) # switch to 'gpt-4'
+    model = ChatOpenAI(model_name='gpt-4', streaming=True, callbacks=[sync_handler], verbose=True) # switch to 'gpt-4'
 
     # qa_chain = ConversationalRetrievalChain.from_llm(model, retriever=retriever)
 
