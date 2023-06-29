@@ -23,6 +23,8 @@
     "express": "^4.18.2",
     "express-ws": "^5.0.2",
     "langchain": "^0.0.96",
+    "multer": "^1.4.5-lts.1",
+    "pdf-parse": "^1.1.1",
     "redis": "^4.6.7",
     "ws": "^8.13.0"
   }
