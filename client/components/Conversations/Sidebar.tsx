@@ -4,7 +4,7 @@ import ConversationPreview from "./ConversationPreview";
 import useGetUserConversations from "../../hooks/useGetUserConversations";
 
 const Sidebar = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
   const { loading, conversations } = useGetUserConversations(
     "20c9875d-5f6a-4a10-b178-63fdb11b1a9a"
   );

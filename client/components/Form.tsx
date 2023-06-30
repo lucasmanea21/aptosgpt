@@ -7,7 +7,7 @@ const Form = ({ handleSubmit, loading, setUserInput, userInput }: any) => {
   const textAreaRef = useRef(null);
 
   // Prevent blank submissions and allow for multiline input
-  const handleEnter = (e) => {
+  const handleEnter = (e: React.KeyboardEvent) => {
     if (e.key === "Enter" && userInput) {
       if (!e.shiftKey && userInput) {
         handleSubmit(e);

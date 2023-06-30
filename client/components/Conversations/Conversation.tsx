@@ -16,7 +16,7 @@ const Conversation = () => {
   const [userInput, setUserInput] = useState("");
   const [isWsOpen, setIsWsOpen] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [messages, setMessages] = useState<[any]>([
+  const [messages, setMessages] = useState<any[]>([
     {
       message: `Hi! How can I help you?`,
       type: "apiMessage",
@@ -24,15 +24,16 @@ const Conversation = () => {
   ]);
 
   const messageListRef = useRef(null);
-  const webSocket = useRef(null);
+  const webSocket = useRef<WebSocket | null>(null);
 
   console.log("conversationMessages", conversationMessages);
 
   useEffect(() => {
-    messages?.length == 0 &&
-      conversationMessages.map(({ message, type }) =>
-        setMessages((prevMessages) => [...prevMessages, { message, type }])
-      );
+    if ((messages?.length ?? 1) === 0) {
+      conversationMessages.forEach(({ message, type }) => {
+        setMessages((prevMessages) => [...prevMessages, { message, type }]);
+      });
+    }
   }, [conversationMessages, conversation]);
 
   // Handle form submission
@@ -107,12 +108,14 @@ const Conversation = () => {
       `ws://${process.env.NEXT_PUBLIC_LCC_ENDPOINT_URL}/chat`
     );
 
-    webSocket.current.onopen = () => {
-      console.log("WebSocket opened");
-      setIsWsOpen(true);
-    };
+    if (webSocket.current !== null) {
+      webSocket.current.onopen = () => {
+        console.log("WebSocket opened");
+        setIsWsOpen(true);
+      };
+    }
     // Listen for messages
-    webSocket.current.onmessage = (event) => {
+    webSocket.current.onmessage = (event: MessageEvent) => {
       handleResponse(JSON.parse(event.data));
     };
 

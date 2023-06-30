@@ -3,7 +3,7 @@ import { supabase } from "../utils/supabaseClient";
 
 export default function useGetUserConversations(userId: string) {
   const [loading, setLoading] = useState(true);
-  const [conversations, setConversations] = useState([]);
+  const [conversations, setConversations] = useState<any[]>([]);
 
   console.log("userId", userId);
 
