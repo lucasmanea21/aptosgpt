@@ -81,15 +81,18 @@ export const runPinecone = async () => {
   console.log("res", res);
 };
 
-export const initalizePinecone = async (ws: any) => {
+export const initalizePinecone = async (vectorStoreData: any, ws: any) => {
   console.log("ran initalization");
   const client = new PineconeClient();
   await client.init({
     apiKey: process.env.PINECONE_API_KEY || "",
     environment: process.env.PINECONE_ENVIRONMENT || "",
   });
-  const pineconeIndex = client.Index("test");
+  const pineconeIndex = client.Index("test"); // You might want to get this from `vectorStoreData`
 
+  const nonStreamingModel = new ChatOpenAI({
+    modelName: "gpt-3.5-turbo",
+  });
   const model = new ChatOpenAI({
     streaming: true,
     callbacks: [
@@ -104,15 +107,30 @@ export const initalizePinecone = async (ws: any) => {
     modelName: "gpt-3.5-turbo",
   });
 
+  console.log("pineconeIndex", pineconeIndex);
+
   const vectorStore = await PineconeStore.fromExistingIndex(
     new OpenAIEmbeddings(),
-    { pineconeIndex }
+    { pineconeIndex: pineconeIndex } // Use the data from `vectorStoreData`
   );
+
+  console.log("vectorStore", vectorStore);
 
   const chain = ConversationalRetrievalQAChain.fromLLM(
     model,
     vectorStore.asRetriever(),
-    {}
+
+    {
+      memory: new BufferMemory({
+        returnMessages: true,
+        memoryKey: "chat_history",
+      }),
+      // @ts-ignore
+      verbose: true,
+      questionGeneratorChainOptions: {
+        llm: nonStreamingModel,
+      },
+    }
   );
 
   return chain;
@@ -125,24 +143,17 @@ export const runQueryPinecone = async ({
 }: {
   ws: any;
   query: string;
-  chain: any;
+  chain: ConversationalRetrievalQAChain;
 }) => {
   console.log("query", query);
   try {
-    console.log("chain", chain);
+    console.log("chain.memory", chain.memory);
+    // const chat_history = chain.memory.get("chat_history");
     const response = await chain.call({
       question: query,
-
-      chat_history: [
-        new HumanChatMessage(
-          "My name is Lucas and I live in Berlin. I like to play soccer and I like to play video games."
-        ),
-        new AIChatMessage("Cool."),
-      ],
     });
 
-    console.log(response.text);
-    return response.text;
+    return { response: response.text, newChain: chain };
   } catch (error) {
     console.log("error", error);
   }
