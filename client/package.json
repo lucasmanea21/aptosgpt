@@ -22,6 +22,8 @@
     "@uppy/progress-bar": "^3.0.2",
     "@uppy/react": "^3.1.2",
     "@uppy/tus": "^3.1.1",
+    "axios": "^1.4.0",
+    "formik": "^2.4.2",
     "jotai": "^2.2.1",
     "next": "13.1.1",
     "openai": "^3.1.0",
@@ -30,10 +32,13 @@
     "react-dropzone": "^14.2.3",
     "react-icons": "^4.10.1",
     "react-markdown": "^8.0.4",
+    "react-modal": "^3.16.1",
     "react-resumable-js": "^1.1.24",
+    "react-select": "^5.7.3",
     "react-syntax-highlighter": "^15.5.0",
     "react-textarea-autosize": "^8.5.0",
-    "resumablejs": "^1.1.0"
+    "resumablejs": "^1.1.0",
+    "swr": "^2.2.0"
   },
   "devDependencies": {
     "@types/node": "20.3.2",

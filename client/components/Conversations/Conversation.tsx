@@ -4,7 +4,7 @@ import styles from "../../styles/Home.module.css";
 import { useRouter } from "next/router";
 import Message from "../Message";
 import Form from "../Form";
-import useConversationMessages from "../../hooks/useGetConversationMessages";
+import useConversationMessages from "../../hooks/useConversationMessages";
 
 const Conversation = () => {
   const router = useRouter();
@@ -22,6 +22,7 @@ const Conversation = () => {
       type: "apiMessage",
     },
   ]);
+  const [selectedDataset, setSelectedDataset] = useState("biblegpt");
 
   const messageListRef = useRef(null);
   const webSocket = useRef<WebSocket | null>(null);
@@ -51,7 +52,12 @@ const Conversation = () => {
     ]);
 
     if (webSocket.current) {
-      webSocket.current.send(userInput);
+      webSocket.current.send(
+        JSON.stringify({
+          type: "query",
+          query: userInput, // selectedProvider should be the ID of the selected provider
+        })
+      );
       setUserInput("");
     } else {
       handleError();
@@ -105,15 +111,24 @@ const Conversation = () => {
 
   useEffect(() => {
     webSocket.current = new WebSocket(
-      `ws://${process.env.NEXT_PUBLIC_LCC_ENDPOINT_URL}/chat`
+      `wss://${process.env.NEXT_PUBLIC_LCC_ENDPOINT_URL}/chat`
     );
 
     if (webSocket.current !== null) {
       webSocket.current.onopen = () => {
         console.log("WebSocket opened");
         setIsWsOpen(true);
+
+        // Send initialization message
+        // webSocket?.current?.send(
+        //   JSON.stringify({
+        //     type: "init",
+        //     name: selectedDataset, // selectedProvider should be the ID of the selected provider
+        //   })
+        // );
       };
     }
+
     // Listen for messages
     webSocket.current.onmessage = (event: MessageEvent) => {
       handleResponse(JSON.parse(event.data));
@@ -129,11 +144,7 @@ const Conversation = () => {
       setLoading(false);
       setIsWsOpen(false);
     };
-
-    // return () => {
-    //   webSocket.current.close();
-    // };
-  }, [webSocket]);
+  }, [webSocket, selectedDataset]); // Add selectedProvider as a dependency
 
   return (
     <div ref={messageListRef} className={styles.messagelist}>

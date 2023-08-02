@@ -147,8 +147,6 @@ export const runQueryPinecone = async ({
 }) => {
   console.log("query", query);
   try {
-    console.log("chain.memory", chain.memory);
-    // const chat_history = chain.memory.get("chat_history");
     const response = await chain.call({
       question: query,
     });

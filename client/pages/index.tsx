@@ -4,7 +4,7 @@ import styles from "../styles/Home.module.css";
 
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
-import Sidebar from "../components/Conversations/Sidebar";
+import Sidebar from "../components/Sidebar/Sidebar";
 import Conversation from "../components/Conversations/Conversation";
 
 export default function Home() {
@@ -33,14 +33,14 @@ export default function Home() {
   // }, [messages]);
 
   return (
-    <div style={{ height: "100vh", overflow: "hidden" }}>
+    <div className="h-screen  items-center">
       <Head>
         <title>LangChain Chat</title>
         <meta name="description" content="LangChain documentation chatbot" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Navbar />
+      {/* <Navbar /> */}
       <main className={styles.main}>
         <div className={styles.cloud}>
           <div className="flex justify-center w-full h-full">
@@ -48,7 +48,6 @@ export default function Home() {
             <Conversation />
           </div>
         </div>
-        <div className={styles.center}>{/* <Footer /> */}</div>
       </main>
     </div>
   );
